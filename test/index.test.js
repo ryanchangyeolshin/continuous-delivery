@@ -2,6 +2,7 @@ const { describe, before, beforeEach, after, it } = require('mocha')
 const { expect } = require('chai')
 const express = require('express')
 const axios = require('axios')
+const createApp = require('../create-app')
 
 describe('app', () => {
 
@@ -9,9 +10,8 @@ describe('app', () => {
   let server
 
   before(done => {
-    const app = express()
     _repo = { name: 'continuous-delivery', description: 'A practice repository for testing and deployment' }
-    server = app
+    server = createApp()
       .get('/', (req, res) => res.json(_repo))
       .listen(3000 || process.env.PORT, () => done())
   })
