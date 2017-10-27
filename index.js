@@ -2,4 +2,4 @@ const express = require('express')
 const createApp = require('./create-app')
 
 createApp()
-  .listen(3000 || process.env.PORT, () => console.log('Listening to PORT' + process.env.PORT))
+  .listen(process.env.PORT, () => console.log('Listening to PORT' + process.env.PORT))
