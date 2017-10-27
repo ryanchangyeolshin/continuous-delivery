@@ -1,0 +1,29 @@
+require('dotenv/config')
+const { describe, before, beforeEach, after, it } = require('mocha')
+const { expect } = require('chai')
+const axios = require('axios')
+const createApp = require('../create-app')
+
+describe('app', () => {
+
+  let _repo
+  let server
+
+  before(done => {
+    _repo = { name: 'continuous-delivery', description: 'A practice repository for testing and deployment' }
+    server = createApp()
+      .listen(process.env.PORT, () => done())
+  })
+
+  after(done => {
+    server.close(() => done())
+  })
+
+  describe('GET /', () => {
+    it('should return a json object with the repository name and description', async () => {
+      const { data } = await axios.get('http://localhost:3000/')
+      expect(data).to.deep.equal(_repo)
+    })
+  })
+
+})
