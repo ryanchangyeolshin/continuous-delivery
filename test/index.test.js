@@ -1,5 +1,6 @@
 require('dotenv/config')
-const { describe, before, beforeEach, after, it } = require('mocha')
+const { MongoClient } = require('mongodb')
+const { describe, before, after, it } = require('mocha')
 const { expect } = require('chai')
 const axios = require('axios')
 const createApp = require('../create-app')
@@ -9,13 +10,20 @@ describe('app', () => {
   let _repo
   let server
 
-  before(done => {
-    _repo = { name: 'continuous-delivery', description: 'A practice repository for testing and deployment' }
-    server = createApp()
-      .listen(process.env.PORT, () => done())
+  before('connect to mongodb', done => {
+    MongoClient.connect(process.env.MONGODB_URI, (err, db) => {
+      if (err) {
+        console.error(db)
+        process.exit(1)
+      }
+      _repo = { name: 'continuous-delivery', description: 'A practice repository for testing and deployment' }
+      server = createApp(db)
+        .listen(process.env.PORT, () => done())
+      })
+    })
   })
 
-  after(done => {
+  after('disconnect from mongodb', done => {
     server.close(() => done())
   })
 
@@ -25,5 +33,4 @@ describe('app', () => {
       expect(data).to.deep.equal(_repo)
     })
   })
-
 })
