@@ -7,15 +7,17 @@ const createApp = require('../create-app')
 
 describe('app', () => {
 
+  let _db
   let _repo
   let server
 
   before('connect to mongodb', done => {
     MongoClient.connect(process.env.MONGODB_URI, (err, db) => {
       if (err) {
-        console.error(db)
+        console.error(err)
         process.exit(1)
       }
+      _db = db
       _repo = { name: 'continuous-delivery', description: 'A practice repository for testing and deployment' }
       server = createApp(db)
         .listen(process.env.PORT, () => done())
@@ -23,6 +25,7 @@ describe('app', () => {
   })
 
   after('disconnect from mongodb', done => {
+    _db.close()
     server.close(() => done())
   })
 
