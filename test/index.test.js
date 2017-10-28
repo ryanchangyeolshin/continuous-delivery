@@ -19,7 +19,6 @@ describe('app', () => {
       _repo = { name: 'continuous-delivery', description: 'A practice repository for testing and deployment' }
       server = createApp(db)
         .listen(process.env.PORT, () => done())
-      })
     })
   })
 
