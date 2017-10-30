@@ -47,7 +47,7 @@ describe('app', () => {
   })
 
   describe('GET /todos', () => {
-    it('should find and return a todo object', async () => {
+    it('should find and return a list of todos', async () => {
       const { data } = await axios.get('http://localhost:3000/todos')
       expect(data[0])
         .to.include(_todo)

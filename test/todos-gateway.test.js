@@ -3,7 +3,6 @@ const { MongoClient } = require('mongodb')
 const { describe, before, after } = require('mocha')
 const { expect } = require('chai')
 const uuid = require('uuid/v4')
-const axios = require('axios')
 const createApp = require('../create-app')
 const findAll = require('../todos-gateway')
 
@@ -23,14 +22,12 @@ describe('todos-gateway', () => {
       _db = db
       _todo = { _id: uuid(), dueDate: '1/1/2000', task: 'Read a book.' }
       _todos = db.collection('todos')
-      server = createApp(db)
-        .listen(process.env.PORT, () => done())
+      done()
     })
   })
 
   after('disconnect from mongodb', done => {
-    _db.close()
-    server.close(() => done())
+    _db.close(() => done())
   })
 
   beforeEach('delete all todos and insert a new one for each test', async () => {
