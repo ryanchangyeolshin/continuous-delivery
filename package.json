@@ -6,7 +6,13 @@
     "node": "8.4.0"
   },
   "main": "index.js",
+  "private": true,
   "scripts": {
+    "lint": "run-p lint:*",
+    "lint:html": "htmlhint ./**/*.html",
+    "lint:css": "stylelint ./**/*.css",
+    "lint:js": "eslint ./**/*.js",
+    "precommit": "npm test",
     "start": "node index.js",
     "watch": "nodemon index.js",
     "test": "mocha test/",
@@ -27,12 +33,26 @@
   "dependencies": {
     "axios": "^0.17.0",
     "dotenv": "^4.0.0",
-    "express": "^4.16.2"
+    "express": "^4.16.2",
+    "mongodb": "^2.2.33",
+    "uuid": "^3.1.0"
   },
   "devDependencies": {
     "chai": "^4.1.2",
+    "eslint": "^4.10.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-react": "^7.4.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "htmlhint": "^0.9.13",
+    "husky": "^0.14.3",
     "mocha": "^4.0.1",
     "nodemon": "^1.12.1",
-    "nyc": "^11.2.1"
+    "npm-run-all": "^4.1.1",
+    "nyc": "^11.2.1",
+    "stylelint": "^8.2.0",
+    "stylelint-config-standard": "^17.0.0"
   }
 }
