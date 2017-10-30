@@ -1,6 +1,6 @@
 require('dotenv/config')
 const { MongoClient } = require('mongodb')
-const { describe, before, after, it } = require('mocha')
+const { describe, before, beforeEach, after, it } = require('mocha')
 const { expect } = require('chai')
 const uuid = require('uuid/v4')
 const axios = require('axios')

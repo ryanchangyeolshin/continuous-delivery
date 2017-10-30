@@ -1,9 +1,8 @@
 require('dotenv/config')
 const { MongoClient } = require('mongodb')
-const { describe, before, after } = require('mocha')
+const { describe, before, beforeEach, after, it } = require('mocha')
 const { expect } = require('chai')
 const uuid = require('uuid/v4')
-const createApp = require('../create-app')
 const findAll = require('../todos-gateway')
 
 describe('todos-gateway', () => {
@@ -11,7 +10,6 @@ describe('todos-gateway', () => {
   let _db
   let _todo
   let _todos
-  let server
 
   before('connect to mongodb', done => {
     MongoClient.connect(process.env.MONGODB_URI, (err, db) => {
