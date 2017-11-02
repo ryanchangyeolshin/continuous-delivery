@@ -16,7 +16,7 @@ export default class TodoForm extends Component {
       dueDate: formData.get('dueDate'),
       task: formData.get('task')
     }
-    axios.post('http://localhost:3000/api/todos', data)
+    axios.post('http://localhost:3001/api/todos', data)
     e.target.reset()
   }
 
