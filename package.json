@@ -21,7 +21,8 @@
     "sync": "browser-sync start --server --no-open --port 3000 --files ./server/public/main.js",
     "test": "mocha test/",
     "tdd": "mocha test/ -w -R min",
-    "cover": "nyc --reporter=lcov --reporter=text npm test"
+    "cover": "nyc --reporter=lcov --reporter=text npm test",
+    "heroku-postbuild": "npm run bundle"
   },
   "repository": {
     "type": "git",
