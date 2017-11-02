@@ -41,8 +41,9 @@ describe('app', () => {
 
   describe('GET /api', () => {
     it('should return a json object with the repository name and description', async () => {
-      const { data } = await axios.get('http://localhost:3000/api')
-      expect(data).to.deep.equal(_repo)
+      const repo = await axios.get('http://localhost:3000/api')
+      expect(repo.data).to.deep.equal(_repo)
+      expect(repo.status).to.equal(200)
     })
   })
 

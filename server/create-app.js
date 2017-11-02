@@ -13,7 +13,7 @@ module.exports = (db) => {
     .use(express.static(publicPath))
     .use(bodyParser.json())
     .get('/api', (req, res) => {
-      res.json({
+      res.status(200).json({
         name: 'continuous-delivery',
         description: 'A practice repository for testing and deployment'
       })
