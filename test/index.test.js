@@ -11,6 +11,7 @@ describe('app', () => {
   let _db
   let _todo
   let _todos
+  let _repo
   let server
 
   before('connect to mongodb', done => {
@@ -22,6 +23,7 @@ describe('app', () => {
       _db = db
       _todo = { _id: uuid(), dueDate: '1/1/2000', task: 'Read a book.' }
       _todos = db.collection('todos')
+      _repo = { name: 'continuous-delivery', description: 'A practice repository for testing and deployment' }
       server = createApp(db)
         .listen(process.env.PORT, () => done())
     })
@@ -37,9 +39,16 @@ describe('app', () => {
     await _todos.insertOne(_todo)
   })
 
-  describe('GET /todos', () => {
+  describe('GET /api', () => {
+    it('should return a json object with the repository name and description', async () => {
+      const { data } = await axios.get('http://localhost:3000/api')
+      expect(data).to.deep.equal(_repo)
+    })
+  })
+
+  describe('GET /api/todos', () => {
     it('should find and return a list of todos', async () => {
-      const todos = await axios.get('http://localhost:3000/todos')
+      const todos = await axios.get('http://localhost:3000/api/todos')
       expect(todos.status).to.equal(200)
       expect(todos.data[0])
         .to.include(_todo)
@@ -48,10 +57,10 @@ describe('app', () => {
     })
   })
 
-  describe('POST /todos', () => {
+  describe('POST /api/todos', () => {
     it('should post a todo and return it', async () => {
       const inserted = { _id: uuid(), dueDate: '3/28/2080', task: 'Finish learning C# basics.' }
-      const todo = await axios.post('http://localhost:3000/todos', inserted)
+      const todo = await axios.post('http://localhost:3000/api/todos', inserted)
       expect(todo.status).to.equal(201)
       expect(todo.config.data).to.deep.equal(JSON.stringify(inserted))
     })
