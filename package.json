@@ -13,8 +13,12 @@
     "lint:css": "stylelint ./**/*.css",
     "lint:js": "eslint ./**/*.js",
     "precommit": "npm test",
-    "start": "node index.js",
-    "watch": "nodemon index.js",
+    "start": "node ./server/index.js",
+    "watchserver": "nodemon ./server/index.js",
+    "watch": "npm-run-all --parallel watchserver bundle:watch",
+    "bundle": "browserify ./client/index.js -t babelify -o ./server/public/main.js",
+    "bundle:watch": "watchify ./client/index.js -vd -t babelify -o ./server/public/main.js",
+    "sync": "browser-sync start --server --no-open --port 3000 --files ./server/public/main.js",
     "test": "mocha test/",
     "tdd": "mocha test/ -w -R min",
     "cover": "nyc --reporter=lcov --reporter=text npm test"
@@ -32,12 +36,22 @@
   "homepage": "https://github.com/ryanchangyeolshin/continuous-delivery#readme",
   "dependencies": {
     "axios": "^0.17.0",
+    "body-parser": "^1.18.2",
     "dotenv": "^4.0.0",
     "express": "^4.16.2",
     "mongodb": "^2.2.33",
+    "path": "^0.12.7",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
     "uuid": "^3.1.0"
   },
   "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babelify": "^8.0.0",
+    "browser-sync": "^2.18.13",
+    "browserify": "^14.5.0",
     "chai": "^4.1.2",
     "eslint": "^4.10.0",
     "eslint-config-standard": "^10.2.1",
@@ -53,6 +67,7 @@
     "npm-run-all": "^4.1.1",
     "nyc": "^11.2.1",
     "stylelint": "^8.2.0",
-    "stylelint-config-standard": "^17.0.0"
+    "stylelint-config-standard": "^17.0.0",
+    "watchify": "^3.9.0"
   }
 }
