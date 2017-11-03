@@ -19,7 +19,7 @@ module.exports = (db) => {
       })
     })
     .get('/api/todos', async (req, res) => {
-      const _todos = await findTodos(todos)
+      const _todos = await findTodos()
       res.status(200).json(_todos)
     })
     .post('/api/todos', async (req, res) => {

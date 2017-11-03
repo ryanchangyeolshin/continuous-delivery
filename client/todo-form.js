@@ -12,11 +12,11 @@ export default class TodoForm extends Component {
     e.preventDefault()
     const formData = new FormData(e.target)
     const data = {
-      _id: uuid(),
+      id: uuid(),
       dueDate: formData.get('dueDate'),
       task: formData.get('task')
     }
-    axios.post('http://localhost:3001/api/todos', data)
+    axios.post('/api/todos', data)
     e.target.reset()
   }
 

@@ -6,7 +6,7 @@ module.exports = collection => {
     },
     async insertTodo(data) {
       const todo = await collection.insertOne(data)
-      return todo
+      return todo.ops[0]
     }
   }
 }

@@ -19,7 +19,7 @@ describe('todos-gateway', () => {
         done(err)
       }
       _db = db
-      _todo = { _id: uuid(), dueDate: '1/1/2000', task: 'Read a book.' }
+      _todo = { id: uuid(), dueDate: '1/1/2000', task: 'Read a book.' }
       _todos = db.collection('todos')
       findTodos = todosGateway(_todos).findTodos
       insertTodo = todosGateway(_todos).insertTodo
@@ -46,8 +46,8 @@ describe('todos-gateway', () => {
   describe('insertTodo()', () => {
     it('return the insertedTodo', async () => {
       const data = { _id: uuid(), dueDate: '1/1/2018', 'task': 'Go for a jog.' }
-      const { ops } = await insertTodo(data)
-      expect(ops[0]).to.deep.equal(data)
+      const todo = await insertTodo(data)
+      expect(todo).to.deep.equal(data)
     })
   })
 })

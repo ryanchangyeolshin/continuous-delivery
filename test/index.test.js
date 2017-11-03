@@ -21,7 +21,7 @@ describe('app', () => {
         done(err)
       }
       _db = db
-      _todo = { _id: uuid(), dueDate: '1/1/2000', task: 'Read a book.' }
+      _todo = { id: uuid(), dueDate: '1/1/2000', task: 'Read a book.' }
       _todos = db.collection('todos')
       _repo = { name: 'continuous-delivery', description: 'A practice repository for testing and deployment' }
       server = createApp(db)
@@ -41,29 +41,29 @@ describe('app', () => {
 
   describe('GET /api', () => {
     it('should return a json object with the repository name and description', async () => {
-      const repo = await axios.get('http://localhost:3000/api')
-      expect(repo.data).to.deep.equal(_repo)
-      expect(repo.status).to.equal(200)
+      const { data, status } = await axios.get(`http://localhost:${process.env.PORT}/api`)
+      expect(data).to.deep.equal(_repo)
+      expect(status).to.equal(200)
     })
   })
 
   describe('GET /api/todos', () => {
     it('should find and return a list of todos', async () => {
-      const todos = await axios.get('http://localhost:3000/api/todos')
-      expect(todos.status).to.equal(200)
-      expect(todos.data[0])
-        .to.include(_todo)
-        .and.have.property('_id')
-        .that.is.a('string')
+      const { status, data } = await axios.get(`http://localhost:${process.env.PORT}/api/todos`)
+      const { id, dueDate, task } = data[0]
+      expect(status).to.equal(200)
+      expect(id).to.equal(_todo.id)
+      expect(dueDate).to.equal(_todo.dueDate)
+      expect(task).to.equal(_todo.task)
     })
   })
 
   describe('POST /api/todos', () => {
     it('should post a todo and return it', async () => {
-      const inserted = { _id: uuid(), dueDate: '3/28/2080', task: 'Finish learning C# basics.' }
-      const todo = await axios.post('http://localhost:3000/api/todos', inserted)
-      expect(todo.status).to.equal(201)
-      expect(todo.config.data).to.deep.equal(JSON.stringify(inserted))
+      const inserted = { id: uuid(), dueDate: '3/28/2080', task: 'Finish learning C# basics.' }
+      const { status, config: { data } } = await axios.post(`http://localhost:${process.env.PORT}/api/todos`, inserted)
+      expect(status).to.equal(201)
+      expect(data).to.deep.equal(JSON.stringify(inserted))
     })
   })
 })
