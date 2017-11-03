@@ -1,10 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import TodoForm from './todo-form'
+import App from './app'
 
 ReactDOM.render(
   <div className="container">
-    <TodoForm />
+    <App />
   </div>
   , document.querySelector('.root')
 )

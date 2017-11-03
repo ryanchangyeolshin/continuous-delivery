@@ -1,31 +1,17 @@
 import React, { Component } from 'react'
-import axios from 'axios'
-import uuid from 'uuid/v4'
 
 export default class TodoForm extends Component {
   constructor(props) {
     super(props)
-    this.handleSubmit = this.handleSubmit.bind(this)
-  }
-
-  handleSubmit(e) {
-    e.preventDefault()
-    const formData = new FormData(e.target)
-    const data = {
-      id: uuid(),
-      dueDate: formData.get('dueDate'),
-      task: formData.get('task')
-    }
-    axios.post('/api/todos', data)
-    e.target.reset()
+    this.props = props
   }
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form className="mt-lg-4" onSubmit={this.props.handleSubmit}>
         <div className="form-group">
           <label htmlFor="dueDate">Due Date</label>
-          <input type="text" className="form-control" name="dueDate" id="dueDate" placeholder="Enter due date." />
+          <input type="date" className="form-control" name="dueDate" id="dueDate" placeholder="Enter due date." />
         </div>
         <div className="form-group">
           <label htmlFor="task">Task</label>
