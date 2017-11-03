@@ -38,7 +38,7 @@ describe('todos-gateway', () => {
 
   describe('findTodos()', () => {
     it('should find and return a list of todos', async () => {
-      const todos = await findTodos(_todos)
+      const todos = await findTodos()
       expect(todos[0]).to.deep.equal(_todo)
     })
   })
